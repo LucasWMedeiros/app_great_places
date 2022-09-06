@@ -21,7 +21,11 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
   }
 
   void _submitForm(){
+    if(_tittleControler.text.isEmpty || _pickedImage == null) {
+      return;
+    }
 
+    Navigator.of(context).pop();
   }
 
   @override
