@@ -2,8 +2,10 @@
 
 import 'dart:io';
 
+import 'package:app_great_places/providers/great_places.dart';
 import 'package:app_great_places/widgets/image_input.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class PlaceFormScreen extends StatefulWidget {
   PlaceFormScreen({Key? key}) : super(key: key);
@@ -16,14 +18,19 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
   final _tittleControler = TextEditingController();
   File? _pickedImage;
 
-  void _selectImage(File pickedImage){
+  void _selectImage(File pickedImage) {
     _pickedImage = pickedImage;
   }
 
-  void _submitForm(){
-    if(_tittleControler.text.isEmpty || _pickedImage == null) {
+  void _submitForm() {
+    if (_tittleControler.text.isEmpty || _pickedImage == null) {
       return;
     }
+
+    Provider.of<GreatPlaces>(context, listen: false).addPlace(
+      _tittleControler.text,
+      _pickedImage!,
+    );
 
     Navigator.of(context).pop();
   }
@@ -59,15 +66,10 @@ class _PlaceFormScreenState extends State<PlaceFormScreen> {
             ElevatedButton(
               onPressed: _submitForm,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).accentColor,
-                elevation: 0
-              ),
+                  backgroundColor: Theme.of(context).accentColor, elevation: 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.add),
-                  Text('Adicionar')
-                ],
+                children: const [Icon(Icons.add), Text('Adicionar')],
               ),
             )
           ],
